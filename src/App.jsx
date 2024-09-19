@@ -60,6 +60,7 @@ function App() {
 									{/* pass in `onInputChange` change here to make filtering work */}
 									<TableToolbarSearch
 										expanded="true"
+										placeholder="Filter players"
 										onChange={(e) =>
 											filterData(e.target.value)
 										}

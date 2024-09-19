@@ -29,11 +29,13 @@
 		height: 100%;
 		section:nth-child(2) {
 			height: calc(100% - 48px);
+
 			> div {
+				height: 100%;
+				overflow: hidden;
 				> table {
 					max-block-size: calc(100svh - 156px);
 				}
-				height: 100%;
 			}
 		}
 	}
