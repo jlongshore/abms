@@ -1,7 +1,7 @@
 .appContainer {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: 100svh;
 }
 
 .appHeader {
@@ -24,14 +24,14 @@
 	padding-left: 16px;
 }
 .appDataTable {
-	height: calc(100vh - 108px) !important;
+	height: calc(100svh - 108px) !important;
 	> div {
 		height: 100%;
 		section:nth-child(2) {
 			height: calc(100% - 48px);
 			> div {
 				> table {
-					max-block-size: calc(100vh - 156px);
+					max-block-size: calc(100svh - 156px);
 				}
 				height: 100%;
 			}
