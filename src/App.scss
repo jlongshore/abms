@@ -8,9 +8,9 @@
 	padding: 8px;
 	display: flex;
 	align-items: center;
-	position: fixed;
-	top: 0;
-	left: 0;
+	//position: fixed;
+	// top: 0;
+	// left: 0;
 	z-index: 1000;
 	background-color: #ffffff;
 	width: 100%;
@@ -24,7 +24,6 @@
 	padding-left: 16px;
 }
 .appDataTable {
-	margin-top: 108px;
 	height: calc(100vh - 108px) !important;
 	> div {
 		height: 100%;
