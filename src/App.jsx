@@ -36,7 +36,7 @@ function App() {
 	};
 
 	return (
-		<>
+		<div className="appContainer">
 			<header className="appHeader">
 				<img src={LogoURL} />
 				<h1 className="appTitle">Football Roster</h1>
@@ -98,7 +98,7 @@ function App() {
 					)}
 				</DataTable>
 			</section>
-		</>
+		</div>
 	);
 }
 
