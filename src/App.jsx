@@ -1,7 +1,14 @@
 import "./App.scss";
+import { version } from "../package.json";
 import {
+	Content,
 	DataTable,
 	Header,
+	HeaderContainer,
+	HeaderGlobalAction,
+	HeaderGlobalBar,
+	HeaderName,
+	HeaderPanel,
 	Table,
 	TableBody,
 	TableCell,
@@ -15,90 +22,180 @@ import {
 } from "@carbon/react";
 import LogoURL from "./images/logo.png";
 import { PlayerData } from "./data/playerData";
-import { useState } from "react";
 import { PlayerDataHeaders } from "./data/playerDataHeaders";
-
+import { Menu as MenuIcon } from "@carbon/react/icons";
+import { DatesData } from "./data/datesData";
 function App() {
-	const [filteredPlayerData, setFilteredPlayerData] = useState(PlayerData);
-
-	const filterData = (textInputValue) => {
-		if (textInputValue === "") {
-			setFilteredPlayerData(PlayerData);
-		}
-		const lowerCaseTextEntry = textInputValue.toLowerCase();
-		const tmpFilteredData = PlayerData.filter(
-			(pData) =>
-				pData.first_name.toLowerCase().includes(lowerCaseTextEntry) ||
-				pData.last_name.toLowerCase().includes(lowerCaseTextEntry) ||
-				pData.number.includes(lowerCaseTextEntry)
-		);
-		setFilteredPlayerData(tmpFilteredData);
+	const ContentStyle = {
+		height: "100%",
+		padding: "0",
+		marginBottom: "0px",
+		width: "100%",
 	};
-
 	return (
 		<div className="appContainer">
-			<header className="appHeader">
-				<img src={LogoURL} />
-				<h1 className="appTitle">Football Roster</h1>
-			</header>
-			<section className="appDataTable">
-				<DataTable
-					isSortable
-					headers={PlayerDataHeaders}
-					rows={filteredPlayerData}
-				>
-					{({
-						rows,
-						headers,
-						getTableProps,
-						getHeaderProps,
-						getRowProps,
-					}) => (
-						<TableContainer>
-							<TableToolbar>
-								<TableToolbarContent>
-									{/* pass in `onInputChange` change here to make filtering work */}
-									<TableToolbarSearch
-										expanded="true"
-										placeholder="Filter players"
-										onChange={(e) =>
-											filterData(e.target.value)
-										}
-									/>
-								</TableToolbarContent>
-							</TableToolbar>
-							<Table {...getTableProps()} stickyHeader>
-								<TableHead>
-									<TableRow>
-										{headers.map((header, hIdx) => (
-											<TableHeader
-												{...getHeaderProps({ header })}
-												key={hIdx}
+			<HeaderContainer
+				render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+					<>
+						<Header aria-label="IBM Platform Name">
+							<img className="headerLogo" src={LogoURL} />
+							<HeaderName href="#" prefix="Wolverine">
+								Football
+							</HeaderName>
+
+							<HeaderGlobalBar>
+								<HeaderGlobalAction
+									aria-label={
+										isSideNavExpanded
+											? "Close switcher"
+											: "Open switcher"
+									}
+									aria-expanded={isSideNavExpanded}
+									isActive={isSideNavExpanded}
+									onClick={onClickSideNavExpand}
+									tooltipAlignment="end"
+									id="switcher-button"
+								>
+									<MenuIcon size={20} />
+								</HeaderGlobalAction>
+							</HeaderGlobalBar>
+							<HeaderPanel
+								expanded={isSideNavExpanded}
+								onHeaderPanelFocus={onClickSideNavExpand}
+								href="#switcher-button"
+							>
+								<section className="appDates">
+									{DatesData.map((monthEl, mIdx) => {
+										return (
+											<section key={mIdx}>
+												<h4 className="monthSectionTitle">
+													{monthEl.month}
+												</h4>
+												{monthEl.events.map(
+													(elEvent, elIdx) => {
+														return (
+															<div
+																className="fbEvent"
+																key={elIdx}
+															>
+																<span className="day">
+																	{
+																		elEvent.day
+																	}
+																</span>{" "}
+																-{" "}
+																<span>
+																	{
+																		elEvent.time
+																	}
+																</span>
+																<div className="info">
+																	<strong>
+																		{
+																			elEvent.info
+																		}
+																	</strong>
+																</div>
+																<div className="location">
+																	{
+																		elEvent.location
+																	}
+																</div>
+															</div>
+														);
+													}
+												)}
+											</section>
+										);
+									})}
+								</section>
+
+								<div className="appPanelFooter">
+									Version {version}
+								</div>
+							</HeaderPanel>
+						</Header>
+						<Content id="main-content" style={ContentStyle}>
+							<section className="appDataTable">
+								<DataTable
+									isSortable
+									headers={PlayerDataHeaders}
+									rows={PlayerData}
+								>
+									{({
+										rows,
+										headers,
+										getTableProps,
+										getHeaderProps,
+										getRowProps,
+										onInputChange,
+									}) => (
+										<TableContainer>
+											<TableToolbar>
+												<TableToolbarContent>
+													<TableToolbarSearch
+														expanded
+														onChange={onInputChange}
+													/>
+												</TableToolbarContent>
+											</TableToolbar>
+											<Table
+												{...getTableProps()}
+												stickyHeader
 											>
-												{header.header}
-											</TableHeader>
-										))}
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{rows.map((row, rIdx) => (
-										<TableRow
-											{...getRowProps({ row })}
-											key={rIdx}
-										>
-											{row.cells.map((cell) => (
-												<TableCell key={cell.id}>
-													{cell.value}
-												</TableCell>
-											))}
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-						</TableContainer>
-					)}
-				</DataTable>
-			</section>
+												<TableHead>
+													<TableRow>
+														{headers.map(
+															(header, hIdx) => (
+																<TableHeader
+																	{...getHeaderProps(
+																		{
+																			header,
+																		}
+																	)}
+																	key={hIdx}
+																>
+																	{
+																		header.header
+																	}
+																</TableHeader>
+															)
+														)}
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													{rows.map((row, rIdx) => (
+														<TableRow
+															{...getRowProps({
+																row,
+															})}
+															key={rIdx}
+														>
+															{row.cells.map(
+																(cell) => (
+																	<TableCell
+																		key={
+																			cell.id
+																		}
+																	>
+																		{
+																			cell.value
+																		}
+																	</TableCell>
+																)
+															)}
+														</TableRow>
+													))}
+												</TableBody>
+											</Table>
+										</TableContainer>
+									)}
+								</DataTable>
+							</section>
+						</Content>
+					</>
+				)}
+			/>
 		</div>
 	);
 }
