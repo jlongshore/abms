@@ -2,7 +2,6 @@ const DatesData = [
 	{
 		month: "September",
 		events: [
-			{ day: 22, info: "Delete me", time: "3:05-5PM", location: "ABMS" },
 			{ day: 23, info: "Full pads", time: "3:05-5PM", location: "ABMS" },
 			{ day: 24, info: "Shells", time: "3:05-4:30PM", location: "ABMS" },
 			{
