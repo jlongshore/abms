@@ -122,7 +122,7 @@ function App() {
 							>
 								<section>
 									<ContentSwitcher
-										size="sm"
+										size="lg"
 										onChange={handleCalChange}
 										selectedIndex={selectedTeamCalendar}
 									>
