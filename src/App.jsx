@@ -2,6 +2,7 @@ import "./App.scss";
 import { version } from "../package.json";
 import {
 	Content,
+	ContentSwitcher,
 	DataTable,
 	Header,
 	HeaderContainer,
@@ -9,6 +10,7 @@ import {
 	HeaderGlobalBar,
 	HeaderName,
 	HeaderPanel,
+	Switch,
 	Table,
 	TableBody,
 	TableCell,
@@ -24,6 +26,7 @@ import {
 } from "@carbon/react";
 import LogoURL from "./images/logo.png";
 import { PlayerData } from "./data/playerData";
+
 import { PlayerDataHeaders } from "./data/playerDataHeaders";
 import {
 	Email,
@@ -31,7 +34,12 @@ import {
 	Settings,
 } from "@carbon/react/icons";
 import { DatesData } from "./data/datesData";
+import { DatesDataB } from "./data/datesDataB";
+import { useState } from "react";
 function App() {
+	const [currentDates, setCurrentDates] = useState(DatesData);
+	const [selectedTeamCalendar, setSelectedTeamCalendar] = useState(0);
+
 	const ContentStyle = {
 		height: "100%",
 		padding: "0",
@@ -58,6 +66,15 @@ function App() {
 		} else {
 			return EventState.FUTURE;
 		}
+	};
+
+	const handleCalChange = (e) => {
+		if (e.name === "A") {
+			setCurrentDates(DatesData);
+		} else {
+			setCurrentDates(DatesDataB);
+		}
+		setSelectedTeamCalendar(e.index);
 	};
 
 	return (
@@ -98,8 +115,17 @@ function App() {
 								onHeaderPanelFocus={onClickSideNavExpand}
 								href="#switcher-button"
 							>
+								<section>
+									<ContentSwitcher
+										onChange={handleCalChange}
+										selectedIndex={selectedTeamCalendar}
+									>
+										<Switch name="A" text="A Schedule" />
+										<Switch name="B" text="B Schedule" />
+									</ContentSwitcher>
+								</section>
 								<section className="appDates">
-									{DatesData.map((monthEl, mIdx) => {
+									{currentDates.map((monthEl, mIdx) => {
 										const currentDate = new Date();
 										return (
 											<section key={mIdx}>
