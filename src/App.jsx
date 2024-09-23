@@ -17,13 +17,19 @@ import {
 	TableHeader,
 	TableRow,
 	TableToolbar,
+	TableToolbarAction,
 	TableToolbarContent,
+	TableToolbarMenu,
 	TableToolbarSearch,
 } from "@carbon/react";
 import LogoURL from "./images/logo.png";
 import { PlayerData } from "./data/playerData";
 import { PlayerDataHeaders } from "./data/playerDataHeaders";
-import { Menu as MenuIcon } from "@carbon/react/icons";
+import {
+	Email,
+	CalendarHeatMap as MenuIcon,
+	Settings,
+} from "@carbon/react/icons";
 import { DatesData } from "./data/datesData";
 function App() {
 	const ContentStyle = {
@@ -32,6 +38,28 @@ function App() {
 		marginBottom: "0px",
 		width: "100%",
 	};
+
+	const EventState = {
+		PAST: "past",
+		PRESENT: "present",
+		FUTURE: "future",
+	};
+
+	const evalEventDate = (eventDate, currentDate) => {
+		const EvDate = eventDate.setHours(0, 0, 0, 0);
+		const CurDate = currentDate.setHours(0, 0, 0, 0);
+		const EvTime = EvDate;
+		const CurTime = CurDate;
+
+		if (EvTime < CurTime) {
+			return EventState.PAST;
+		} else if (EvTime === CurTime) {
+			return EventState.PRESENT;
+		} else {
+			return EventState.FUTURE;
+		}
+	};
+
 	return (
 		<div className="appContainer">
 			<HeaderContainer
@@ -45,10 +73,16 @@ function App() {
 
 							<HeaderGlobalBar>
 								<HeaderGlobalAction
+									aria-label="Contact Developer"
+									href="mailto:madkidflash@gmail.com?subject=Help with ABMS football app"
+								>
+									<Email size={20} />
+								</HeaderGlobalAction>
+								<HeaderGlobalAction
 									aria-label={
 										isSideNavExpanded
-											? "Close switcher"
-											: "Open switcher"
+											? "Close events"
+											: "Open events"
 									}
 									aria-expanded={isSideNavExpanded}
 									isActive={isSideNavExpanded}
@@ -66,6 +100,7 @@ function App() {
 							>
 								<section className="appDates">
 									{DatesData.map((monthEl, mIdx) => {
+										const currentDate = new Date();
 										return (
 											<section key={mIdx}>
 												<h4 className="monthSectionTitle">
@@ -73,9 +108,23 @@ function App() {
 												</h4>
 												{monthEl.events.map(
 													(elEvent, elIdx) => {
+														const eventDate =
+															new Date(
+																Date.parse(
+																	`${monthEl.month} ${elEvent.day}, 2024`
+																)
+															);
+														const eventDateState =
+															evalEventDate(
+																eventDate,
+																currentDate
+															);
+														console.log(
+															`eventDate (${eventDate}) state is: ${eventDateState}`
+														);
 														return (
 															<div
-																className="fbEvent"
+																className={`fbEvent ${eventDateState}`}
 																key={elIdx}
 															>
 																<span className="day">
@@ -132,11 +181,26 @@ function App() {
 									}) => (
 										<TableContainer>
 											<TableToolbar>
-												<TableToolbarContent>
+												<TableToolbarContent className="TableTBContent">
 													<TableToolbarSearch
 														expanded
 														onChange={onInputChange}
+														placeholder="Filter players"
 													/>
+													{/* <TableToolbarMenu
+														className="Tacos"
+														renderIcon={Settings}
+													>
+														<TableToolbarAction
+															onClick={() =>
+																console.log(
+																	"Alert 1"
+																)
+															}
+														>
+															Action 1
+														</TableToolbarAction>
+													</TableToolbarMenu> */}
 												</TableToolbarContent>
 											</TableToolbar>
 											<Table

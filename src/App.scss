@@ -56,8 +56,18 @@
 }
 
 .fbEvent {
-	outline: 1px solid #666;
+	border: 1px solid #666;
 	padding: 8px;
+	&.past {
+		color: #aaa;
+	}
+	&.present {
+		border: 2px solid #1d6323;
+		box-shadow: inset 0 0 10px #1d6323;
+	}
+	// .future {
+
+	// }
 }
 .monthSectionTitle {
 	padding: 11px 16px;
@@ -74,4 +84,8 @@ span.day {
 	margin: 4px;
 }
 .location {
+}
+
+.TableTBContent {
+	padding-right: 10px;
 }
