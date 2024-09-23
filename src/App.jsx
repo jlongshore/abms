@@ -116,12 +116,13 @@ function App() {
 								href="#switcher-button"
 								className={
 									isSideNavExpanded
-										? "eventsPanelOpen"
-										: "eventsPanelClosed"
+										? "eventsPanelOpen eventsPanel"
+										: "eventsPanelClosed eventsPanel"
 								}
 							>
 								<section>
 									<ContentSwitcher
+										size="sm"
 										onChange={handleCalChange}
 										selectedIndex={selectedTeamCalendar}
 									>

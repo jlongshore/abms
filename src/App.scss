@@ -46,7 +46,6 @@
 }
 
 .appDates {
-	height: calc(100% - 80px);
 	overflow-y: auto;
 }
 .appPanelFooter {
@@ -89,6 +88,11 @@ span.day {
 
 .TableTBContent {
 	padding-right: 10px;
+}
+
+.eventsPanel {
+	display: flex;
+	flex-direction: column;
 }
 
 .eventsPanelOpen {
