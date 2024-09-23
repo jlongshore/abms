@@ -53,6 +53,8 @@ function App() {
 		FUTURE: "future",
 	};
 
+	const iconSize = 30;
+
 	const evalEventDate = (eventDate, currentDate) => {
 		const EvDate = eventDate.setHours(0, 0, 0, 0);
 		const CurDate = currentDate.setHours(0, 0, 0, 0);
@@ -84,7 +86,11 @@ function App() {
 					<>
 						<Header aria-label="IBM Platform Name">
 							<img className="headerLogo" src={LogoURL} />
-							<HeaderName href="#" prefix="Wolverine">
+							<HeaderName
+								className="AppName"
+								href="#"
+								prefix="Wolverine"
+							>
 								Football
 							</HeaderName>
 
@@ -93,7 +99,7 @@ function App() {
 									aria-label="Contact Developer"
 									href="mailto:madkidflash@gmail.com?subject=Help with ABMS football app"
 								>
-									<Email size={20} />
+									<Email size={iconSize} />
 								</HeaderGlobalAction>
 								<HeaderGlobalAction
 									aria-label={
@@ -107,7 +113,7 @@ function App() {
 									tooltipAlignment="end"
 									id="switcher-button"
 								>
-									<MenuIcon size={20} />
+									<MenuIcon size={iconSize} />
 								</HeaderGlobalAction>
 							</HeaderGlobalBar>
 							<HeaderPanel
@@ -197,7 +203,13 @@ function App() {
 							</HeaderPanel>
 						</Header>
 						<Content id="main-content" style={ContentStyle}>
-							<section className="appDataTable">
+							<section
+								className={
+									isSideNavExpanded
+										? "TableHide appDataTable"
+										: "TableShow appDataTable"
+								}
+							>
 								<DataTable
 									isSortable
 									headers={PlayerDataHeaders}

@@ -43,6 +43,25 @@
 			}
 		}
 	}
+
+	&.TableHide {
+		&:before {
+			content: " ";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background-color: rgba(0, 0, 0, 0.65);
+			z-index: 7999;
+			&.hide {
+				display: none;
+			}
+			&.show {
+				display: block;
+			}
+		}
+	}
 }
 
 .appDates {
@@ -93,6 +112,10 @@ span.day {
 .eventsPanel {
 	display: flex;
 	flex-direction: column;
+}
+
+.AppName {
+	font-size: 18px !important;
 }
 
 .eventsPanelOpen {
