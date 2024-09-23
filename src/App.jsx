@@ -114,6 +114,11 @@ function App() {
 								expanded={isSideNavExpanded}
 								onHeaderPanelFocus={onClickSideNavExpand}
 								href="#switcher-button"
+								className={
+									isSideNavExpanded
+										? "eventsPanelOpen"
+										: "eventsPanelClosed"
+								}
 							>
 								<section>
 									<ContentSwitcher
